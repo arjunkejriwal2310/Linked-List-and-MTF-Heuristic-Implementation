@@ -1,0 +1,72 @@
+---
+title: "Lecture 08: Binary Search trees"
+---
+
+Scribes:
+
+- Heloise Schep
+
+Midterm text week, and assignment 03
+
+## Last time
+- Binary search: dealing with sorted sets in array-based implementation
+- Main methods: 
+	- find - O(log n) time for array using binary search 
+	- add, remove - O(n) for array implementation: this takes so much longer than the find method! how can we achieve O(log n) time for all operations? 
+
+## Question: What is the "access pattern" of binary search? Which elements of the array do I access in what order?
+- we always start at the midpoint, n/2
+- then access the two quarter-midpoints of the midpoint, either n/4 or 3n/4
+- then four octo-midpoints of that quarter-midpoint: n/8, 3n/8, 5n/8, 7n/8
+
+## Idea: Represent the search structure as nodes: node for n/2, then to the left and right ( n/4 or 3n/4 ), then each of those two nodes having a node to its right and left... etc. 
+- combine array and linked lists 
+- Nodes: each child has a "left child" and "right child." 
+- nodes to the left all store smaller items; nodes to the right all store larger elements 
+- example: S = {2, 3, 5, 7, 13, 15, 17, 19}
+	--------	7--------
+	|		|
+--------	3-----	    ----- 15-------
+|	     |       |             |
+2	      5      13		17-------
+					|	
+					19	
+
+- in this example, how do we find 11? 
+	- 11 > 7, so go right from 7
+	- 11 < 15, so go left from 15
+	- 11 < 13, but we cannot go left: "Fail to find 11." 
+- add(11) through the same process, but adding in a new node for 11 and putting it to the left of 13
+- remove(2) 
+	- 2 < 7, so go left from 7
+	- 2 < 3, so go left from 3
+	- 2 = 2, we found it!
+	- remove the pointer. set it to null!
+- remove(15) but keep a node to the right of 7
+	- which value do we keep? have to ensure left child is smaller, right child is bigger
+
+## Definitions 
+- a binary tree is a collection of nodes with a unique root node. each node has 
+	- a parent (except the root node)
+	- a left child (may be null) 
+	- a right child (may be null) 
+- must satisfy:
+	- if u is a child of v, then v is u's parent 
+	- root is an ancestor of every node: you must eventually reach the root by moving up the tree. every node is a descendant of the root
+
+## Tree terminology 
+- root: unique node, no parent 
+- leaf: node without children
+- internal node: node that is not a leaf. includes a root, unless the root has no children. 
+- depth of a node: distance from the root. root has depth 0; its children have depth 1; grandchildren depth 2; etc. 
+- depth of a tree: largest depth of any node in the tree
+- nodes are referred to with u, v, w: v is for vertex :) 
+- height of u (node): max distance to a leaf that is a descendant of u
+	- note: height of root = depth of tree 
+- binary search tree: each node has a value. right nodes are larger than parent, left nodes are smaller.
+
+
+
+
+
+
